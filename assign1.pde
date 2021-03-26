@@ -8,12 +8,12 @@ PImage soldier;
 float soldierX=-80;
 float soldierY=400;
 
-float robotX=(80*floor(random(6)) + 1)+160;
-float robotY=(80*floor(random(4)) + 1)+160;
+float robotX=(80*floor(random(6)))+160;
+float robotY=(80*floor(random(4)))+160;
 
 float lazerX=robotX+25;
 float lazerY=robotY+37;
-int lazerWidth=40;
+int lazerWidth=0;
 
 void setup() {
 	size(640, 480, P2D);
@@ -25,7 +25,7 @@ void setup() {
   soldier = loadImage("soldier.png");
   
   //soldier appears in random level 
-  soldierY =(80*floor(random(4)) + 1)+160;
+  soldierY =(80*floor(random(4)))+160;
 
 }
 
@@ -60,7 +60,7 @@ void draw() {
   
   //move to right
   soldierX +=2;
-  soldierX %=640+80;
+  if(soldierX >=640) soldierX=-80;
   
   //robot
   image(robot,robotX,robotY,80,80);
@@ -69,11 +69,12 @@ void draw() {
   strokeWeight(10);
   stroke(255,0,0);
   line(lazerX,lazerY,lazerX-lazerWidth,lazerY);
-  
+  lazerX -=2;
+  lazerWidth +=2;
+  if(lazerWidth>40)lazerWidth=40;
   //move to left (lazer beam)
-  lazerX -=2; 
-  
   if(lazerX < robotX-80){
     lazerX=robotX+25;
+    lazerWidth=0;
   }
 }   
